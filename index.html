@@ -1,0 +1,173 @@
+<html>
+
+<head>
+    <title>産総研 統合DEM（PNG数値タイル）+赤色立体地図</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.js'></script>
+    <link href='https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/pmtiles@2.10.0/dist/index.js"></script>
+    <script type="module" src="maplibre-gl-gsi-terrain-fast-png.js"></script>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .map-overlay {
+            font: bold 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            position: absolute;
+            width: 220px;
+            bottom: 20px;
+            left: 0;
+            padding: 10px;
+        }
+
+        .map-overlay .map-overlay-inner {
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .map-overlay label {
+            display: block;
+            margin: 0 0 0px;
+            font-size: 12px;
+            top: 100px;
+            left: 10px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .map-overlay input {
+            background-color: transparent;
+            display: inline-block;
+            width: 100%;
+            position: relative;
+            margin: 0;
+            cursor: ew-resize;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div class="map-overlay top">
+        <div class="map-overlay-inner">
+            <label>赤色立体地図 不透明度: <span id="red-relief-slider-opacity-value">100%</span></label>
+            <input id="red-relief-slider-opacity" type="range" min="0" max="100" step="1" value="100">
+        </div>
+    </div>
+    <script type="text/javascript">
+        // protocolの設定
+        let protocol = new pmtiles.Protocol();
+        maplibregl.addProtocol("pmtiles", protocol.tile);
+
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'std.json',
+            zoom: 13.5,
+            minZoom: 1,
+            maxZoom: 23,
+            pitch: 60,
+            bearing: 0,
+            center: [139.40672, 34.70482],
+            hash: true,
+            attributionControl: false
+        });
+
+        // ズーム・回転
+        map.addControl(new maplibregl.NavigationControl());
+
+        // フルスクリーンモードのオンオフ
+        map.addControl(new maplibregl.FullscreenControl());
+
+        // 現在位置表示
+        map.addControl(new maplibregl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: false
+            },
+            fitBoundsOptions: { maxZoom: 18 },
+            trackUserLocation: true,
+            showUserLocation: true
+        }));
+
+        // スケール表示
+        map.addControl(new maplibregl.ScaleControl({
+            maxWidth: 200,
+            unit: 'metric'
+        }));
+
+        // Attributionを折りたたみ表示
+        map.addControl(new maplibregl.AttributionControl({
+            compact: true,
+            customAttribution: '（<a href="https://twitter.com/shi__works" target="_blank">Twitter</a> | <a href="https://github.com/shi-works/gsi-dem-with-red-relief-on-maplibre-gl-js" target="_blank">Github</a>） '
+        }));
+
+        // 3D地形コントロール
+        map.addControl(
+            new maplibregl.TerrainControl({
+                source: 'gsi-dem',
+                exaggeration: 1 // 標高を強調する倍率
+            })
+        );
+
+        map.on('load', () => {
+            // 地理院 標高タイルDEM
+            map.addSource("gsi-dem", {
+                type: 'raster-dem',
+                tiles: [
+                    'gsidem://https://cyberjapandata.gsi.go.jp/xyz/dem5a_png/{z}/{x}/{y}.png',
+                ],
+                attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html#dem" target="_blank">地理院タイル（標高タイル）</a>',
+                tileSize: 256
+            });
+
+            map.setTerrain({ 'source': 'gsi-dem', 'exaggeration': 1 });
+
+            // 赤色立体地図PMTilesソース
+            map.addSource("pmtiles-red-relief-image-map", {
+                type: "raster",
+                url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-izuooshima.pmtiles",
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ</a>'
+            });
+
+            // 赤色立体地図PMTilesレイヤ
+            map.addLayer({
+                'id': 'pmtiles-red-relief-image-map',
+                'type': "raster",
+                'source': 'pmtiles-red-relief-image-map',
+                "minzoom": 1,
+                "maxzoom": 23,
+                'layout': {
+                    'visibility': 'visible'
+                }
+            });
+
+            // 赤色立体地図の不透明度をスライダーで制御
+            const red_relief_sliderOpactiy = document.getElementById('red-relief-slider-opacity');
+            const red_relief_sliderOpactiyValue = document.getElementById('red-relief-slider-opacity-value');
+
+            red_relief_sliderOpactiy.addEventListener('input', (e) => {
+                map.setPaintProperty(
+                    'pmtiles-red-relief-image-map',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                red_relief_sliderOpactiyValue.textContent = e.target.value + '%';
+            });
+
+            map.showTileBoundaries = false;
+
+        })
+
+    </script>
+</body>
+
+</html>
