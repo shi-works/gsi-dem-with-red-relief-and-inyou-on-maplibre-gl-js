@@ -11,7 +11,7 @@
 			"tiles": [
 				"pmtiles://https://cyberjapandata.gsi.go.jp/xyz/optimal_bvmap-v1/optimal_bvmap-v1.pmtiles/{z}/{x}/{y}"
 			],
-			"attribution": "国土地理院最適化ベクトルタイル(標準地図風スタイル)"
+			"attribution": "<a href='https://github.com/gsi-cyberjapan/optimal_bvmap' target='_blank'>国土地理院最適化ベクトルタイル(標準地図風スタイル)</a>"
 		}
 	},
 	"layers": [
@@ -18843,19 +18843,21 @@
 					],
 					[
 						"step",
-						["zoom"],
+						[
+							"zoom"
+						],
 						[
 							"match",
 							[
 								"get",
 								"vt_code"
-							],	
+							],
 							[
 								661,
 								662
 							],
-							"rgba(0,0,0,0)"	,
-							[					
+							"rgba(0,0,0,0)",
+							[
 								"var",
 								"color"
 							]
@@ -18866,7 +18868,7 @@
 							[
 								"get",
 								"vt_code"
-							],	
+							],
 							[
 								3201,
 								3204,
@@ -18876,28 +18878,30 @@
 								3218,
 								3243
 							],
-							"rgba(0,0,0,0)"	,
-							[					
+							"rgba(0,0,0,0)",
+							[
 								"var",
 								"color"
 							]
-						]						
+						]
 					]
 				],
 				"text-halo-color": [
 					"step",
-					["zoom"],
+					[
+						"zoom"
+					],
 					[
 						"match",
 						[
 							"get",
 							"vt_code"
-						],	
+						],
 						[
 							661,
 							662
 						],
-						"rgba(0,0,0,0)"	,
+						"rgba(0,0,0,0)",
 						"rgba(255,255,255,1)"
 					],
 					14,
@@ -18906,7 +18910,7 @@
 						[
 							"get",
 							"vt_code"
-						],	
+						],
 						[
 							3201,
 							3204,
@@ -18916,9 +18920,9 @@
 							3218,
 							3243
 						],
-						"rgba(0,0,0,0)"	,
+						"rgba(0,0,0,0)",
 						"rgba(255,255,255,1)"
-					]						
+					]
 				],
 				"text-halo-width": 1
 			}
@@ -24199,13 +24203,15 @@
 					],
 					[
 						"step",
-						["zoom"],
+						[
+							"zoom"
+						],
 						[
 							"match",
 							[
 								"get",
 								"vt_code"
-							],	
+							],
 							[
 								631,
 								632,
@@ -24213,8 +24219,8 @@
 								6368,
 								6376
 							],
-							"rgba(0,0,0,0)"	,
-							[					
+							"rgba(0,0,0,0)",
+							[
 								"var",
 								"color"
 							]
@@ -24225,30 +24231,32 @@
 							[
 								"get",
 								"vt_code"
-							],	
+							],
 							[
 								3212,
 								3213,
 								3214
 							],
-							"rgba(0,0,0,0)"	,
-							[					
+							"rgba(0,0,0,0)",
+							[
 								"var",
 								"color"
 							]
-						]						
+						]
 					]
 				],
 				"text-halo-color": "rgba(255,255,255,1)",
 				"text-halo-color": [
 					"step",
-					["zoom"],
+					[
+						"zoom"
+					],
 					[
 						"match",
 						[
 							"get",
 							"vt_code"
-						],	
+						],
 						[
 							631,
 							632,
@@ -24256,7 +24264,7 @@
 							6368,
 							6376
 						],
-						"rgba(0,0,0,0)"	,
+						"rgba(0,0,0,0)",
 						"rgba(255,255,255,1)"
 					],
 					14,
@@ -24265,13 +24273,13 @@
 						[
 							"get",
 							"vt_code"
-						],	
+						],
 						[
 							3212,
 							3213,
 							3214
 						],
-						"rgba(0,0,0,0)"	,
+						"rgba(0,0,0,0)",
 						"rgba(255,255,255,1)"
 					]
 				],
