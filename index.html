@@ -133,18 +133,37 @@
 
             map.setTerrain({ 'source': 'gsi-dem', 'exaggeration': 1 });
 
-            // 赤色立体地図PMTilesソース
-            map.addSource("pmtiles-red-relief-image-map", {
+            // 赤色立体地図（伊豆大島）PMTilesソース
+            map.addSource("pmtiles-red-relief-map-izuooshima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-izuooshima.pmtiles",
                 attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
             });
 
-            // 赤色立体地図PMTilesレイヤ
+            // 赤色立体地図（伊豆大島）PMTilesレイヤ
             map.addLayer({
-                'id': 'pmtiles-red-relief-image-map',
+                'id': 'pmtiles-red-relief-map-izuooshima',
                 'type': "raster",
-                'source': 'pmtiles-red-relief-image-map',
+                'source': 'pmtiles-red-relief-map-izuooshima',
+                "minzoom": 1,
+                "maxzoom": 23,
+                'layout': {
+                    'visibility': 'visible'
+                }
+            });
+
+            // 赤色立体地図（青ヶ島）PMTilesソース
+            map.addSource("pmtiles-red-relief-map-aogashima", {
+                type: "raster",
+                url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-aogashima.pmtiles",
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+            });
+
+            // 赤色立体地図（青ヶ島）PMTilesレイヤ
+            map.addLayer({
+                'id': 'pmtiles-red-relief-map-aogashima',
+                'type': "raster",
+                'source': 'pmtiles-red-relief-map-aogashima',
                 "minzoom": 1,
                 "maxzoom": 23,
                 'layout': {
@@ -158,26 +177,52 @@
 
             red_relief_sliderOpactiy.addEventListener('input', (e) => {
                 map.setPaintProperty(
-                    'pmtiles-red-relief-image-map',
+                    'pmtiles-red-relief-map-izuooshima',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                map.setPaintProperty(
+                    'pmtiles-red-relief-map-aogashima',
                     'raster-opacity',
                     parseInt(e.target.value, 10) / 100
                 );
                 red_relief_sliderOpactiyValue.textContent = e.target.value + '%';
             });
 
-
-            // 陰陽図PMTilesソース
-            map.addSource("pmtiles-inyou-map", {
+            // 陰陽図（伊豆大島）PMTilesソース
+            map.addSource("pmtiles-inyou-map-izuooshima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-izuooshima.pmtiles",
                 attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
             });
 
-            // 陰陽図PMTilesレイヤ
+            // 陰陽図（伊豆大島）PMTilesレイヤ
             map.addLayer({
-                'id': 'pmtiles-inyou-map',
+                'id': 'pmtiles-inyou-map-izuooshima',
                 'type': 'raster',
-                'source': 'pmtiles-inyou-map',
+                'source': 'pmtiles-inyou-map-izuooshima',
+                'minzoom': 1,
+                'maxzoom': 23,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'raster-opacity': 0
+                }
+            });
+
+            // 陰陽図（青ヶ島）PMTilesソース
+            map.addSource("pmtiles-inyou-map-aogashima", {
+                type: "raster",
+                url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-aogashima.pmtiles",
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+            });
+
+            // 陰陽図（青ヶ島）PMTilesレイヤ
+            map.addLayer({
+                'id': 'pmtiles-inyou-map-aogashima',
+                'type': 'raster',
+                'source': 'pmtiles-inyou-map-aogashima',
                 'minzoom': 1,
                 'maxzoom': 23,
                 'layout': {
@@ -194,7 +239,12 @@
 
             inyou_sliderOpactiy.addEventListener('input', (e) => {
                 map.setPaintProperty(
-                    'pmtiles-inyou-map',
+                    'pmtiles-inyou-map-izuooshima',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                map.setPaintProperty(
+                    'pmtiles-inyou-map-aogashima',
                     'raster-opacity',
                     parseInt(e.target.value, 10) / 100
                 );
