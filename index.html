@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>地理院 標高タイル（DEM5A）+赤色立体地図（伊豆大島）</title>
+    <title>地理院 標高タイル（DEM5A）+赤色立体地図+陰陽図</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.js'></script>
@@ -62,6 +62,8 @@
         <div class="map-overlay-inner">
             <label>赤色立体地図 不透明度: <span id="red-relief-slider-opacity-value">100%</span></label>
             <input id="red-relief-slider-opacity" type="range" min="0" max="100" step="1" value="100">
+            <label>陰陽図 不透明度: <span id="inyou-slider-opacity-value">0%</span></label>
+            <input id="inyou-slider-opacity" type="range" min="0" max="100" step="1" value="0">
         </div>
     </div>
     <script type="text/javascript">
@@ -135,7 +137,7 @@
             map.addSource("pmtiles-red-relief-image-map", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-izuooshima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
             });
 
             // 赤色立体地図PMTilesレイヤ
@@ -161,6 +163,42 @@
                     parseInt(e.target.value, 10) / 100
                 );
                 red_relief_sliderOpactiyValue.textContent = e.target.value + '%';
+            });
+
+
+            // 陰陽図PMTilesソース
+            map.addSource("pmtiles-inyou-map", {
+                type: "raster",
+                url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-izuooshima.pmtiles",
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+            });
+
+            // 陰陽図PMTilesレイヤ
+            map.addLayer({
+                'id': 'pmtiles-inyou-map',
+                'type': 'raster',
+                'source': 'pmtiles-inyou-map',
+                'minzoom': 1,
+                'maxzoom': 23,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'raster-opacity': 0
+                }
+            });
+
+            // 陰陽図の不透明度をスライダーで制御
+            const inyou_sliderOpactiy = document.getElementById('inyou-slider-opacity');
+            const inyou_sliderOpactiyValue = document.getElementById('inyou-slider-opacity-value');
+
+            inyou_sliderOpactiy.addEventListener('input', (e) => {
+                map.setPaintProperty(
+                    'pmtiles-inyou-map',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                inyou_sliderOpactiyValue.textContent = e.target.value + '%';
             });
 
             map.showTileBoundaries = false;
