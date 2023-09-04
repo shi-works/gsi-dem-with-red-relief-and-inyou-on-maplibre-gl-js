@@ -209,6 +209,25 @@
                 }
             });
 
+            // 赤色立体地図（八丈島）PMTilesソース
+            map.addSource("pmtiles-red-relief-map-hachijojima", {
+                type: "raster",
+                url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-hachijojima.pmtiles",
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+            });
+
+            // 赤色立体地図（八丈島）PMTilesレイヤ
+            map.addLayer({
+                'id': 'pmtiles-red-relief-map-hachijojima',
+                'type': "raster",
+                'source': 'pmtiles-red-relief-map-hachijojima',
+                "minzoom": 1,
+                "maxzoom": 23,
+                'layout': {
+                    'visibility': 'visible'
+                }
+            });
+
             // 赤色立体地図の不透明度をスライダーで制御
             const red_relief_sliderOpactiy = document.getElementById('red-relief-slider-opacity');
             const red_relief_sliderOpactiyValue = document.getElementById('red-relief-slider-opacity-value');
@@ -231,6 +250,11 @@
                 );
                 map.setPaintProperty(
                     'pmtiles-red-relief-map-miyakejima',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                map.setPaintProperty(
+                    'pmtiles-red-relief-map-hachijojima',
                     'raster-opacity',
                     parseInt(e.target.value, 10) / 100
                 );
@@ -325,6 +349,28 @@
                 }
             });
 
+            // 陰陽図（八丈島）PMTilesソース
+            map.addSource("pmtiles-inyou-map-hachijojima", {
+                type: "raster",
+                url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-hachijojima.pmtiles",
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+            });
+
+            // 陰陽図（八丈島）PMTilesレイヤ
+            map.addLayer({
+                'id': 'pmtiles-inyou-map-hachijojima',
+                'type': 'raster',
+                'source': 'pmtiles-inyou-map-hachijojima',
+                'minzoom': 1,
+                'maxzoom': 23,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'raster-opacity': 0
+                }
+            });
+
             // 陰陽図の不透明度をスライダーで制御
             const inyou_sliderOpactiy = document.getElementById('inyou-slider-opacity');
             const inyou_sliderOpactiyValue = document.getElementById('inyou-slider-opacity-value');
@@ -347,6 +393,11 @@
                 );
                 map.setPaintProperty(
                     'pmtiles-inyou-map-miyakejima',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                map.setPaintProperty(
+                    'pmtiles-inyou-map-hachijojima',
                     'raster-opacity',
                     parseInt(e.target.value, 10) / 100
                 );
