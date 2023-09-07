@@ -228,6 +228,28 @@
                 }
             });
 
+            // 陰影起伏図ソース
+            map.addSource("tama-sekisyoku", {
+                type: 'raster',
+                tiles: [
+                    'https://kenzkenz2.xsrv.jp/tokyo/tamasekisyoku/{z}/{x}/{y}.png',
+                ],
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000020" target="_blank">東京都デジタルツイン 多摩地域点群データ（赤色立体地図,陰陽図）</a>',
+                tileSize: 256
+            });
+
+            // 陰影起伏図レイヤ
+            map.addLayer({
+                id: 'tama-sekisyoku-tiles',
+                type: 'raster',
+                source: 'tama-sekisyoku',
+                minzoom: 1,
+                maxzoom: 23,
+                'layout': {
+                    'visibility': 'visible'
+                }
+            });
+
             // 赤色立体地図の不透明度をスライダーで制御
             const red_relief_sliderOpactiy = document.getElementById('red-relief-slider-opacity');
             const red_relief_sliderOpactiyValue = document.getElementById('red-relief-slider-opacity-value');
@@ -255,6 +277,11 @@
                 );
                 map.setPaintProperty(
                     'pmtiles-red-relief-map-hachijojima',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                map.setPaintProperty(
+                    'tama-sekisyoku-tiles',
                     'raster-opacity',
                     parseInt(e.target.value, 10) / 100
                 );
