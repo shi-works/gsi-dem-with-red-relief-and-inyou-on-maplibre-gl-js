@@ -133,6 +133,28 @@
 
             map.setTerrain({ 'source': 'gsi-dem', 'exaggeration': 1 });
 
+            // 陰影起伏図ソース
+            map.addSource("hillshade", {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/hillshademap/{z}/{x}/{y}.png',
+                ],
+                attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html#hillshademap" target="_blank">地理院タイル(陰影起伏図)</a>',
+                tileSize: 256
+            });
+
+            // 陰影起伏図レイヤ
+            map.addLayer({
+                id: 'hillshade-tiles',
+                type: 'raster',
+                source: 'hillshade',
+                minzoom: 2,
+                maxzoom: 18,
+                paint: {
+                    'raster-opacity': 0.5
+                }
+            });
+
             // 赤色立体地図（伊豆大島）PMTilesソース
             map.addSource("pmtiles-red-relief-map-izuooshima", {
                 type: "raster",
@@ -228,17 +250,17 @@
                 }
             });
 
-            // 陰影起伏図ソース
+            // 赤色立体地図（多摩地域）ソース
             map.addSource("tama-sekisyoku", {
                 type: 'raster',
                 tiles: [
-                    'https://kenzkenz2.xsrv.jp/tokyo/tamasekisyoku/{z}/{x}/{y}.png',
+                    'https://kenzkenz2.xsrv.jp/tokyo/tamainyou//{z}/{x}/{y}.png',
                 ],
                 attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000020" target="_blank">東京都デジタルツイン 多摩地域点群データ（赤色立体地図,陰陽図）</a>',
                 tileSize: 256
             });
 
-            // 陰影起伏図レイヤ
+            // 赤色立体地図（多摩地域）レイヤ
             map.addLayer({
                 id: 'tama-sekisyoku-tiles',
                 type: 'raster',
