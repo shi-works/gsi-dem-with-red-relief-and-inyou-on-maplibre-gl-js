@@ -250,11 +250,13 @@
                 }
             });
 
+            /*
             // 赤色立体地図（多摩地域）ソース
             map.addSource("tama-sekisyoku", {
                 type: 'raster',
                 tiles: [
                     'https://kenzkenz2.xsrv.jp/tokyo/tamasekisyoku/{z}/{x}/{y}.png',
+                    // 'https://kenzkenz2.xsrv.jp/gihucs/{z}/{x}/{y}.png',
                 ],
                 attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000020" target="_blank">東京都デジタルツイン 多摩地域点群データ（赤色立体地図,陰陽図）</a>',
                 tileSize: 256
@@ -265,6 +267,29 @@
                 id: 'tama-sekisyoku-tiles',
                 type: 'raster',
                 source: 'tama-sekisyoku',
+                minzoom: 1,
+                maxzoom: 23,
+                'layout': {
+                    'visibility': 'visible'
+                }
+            });
+            */
+
+            // 岐阜CS立体図ソース
+            map.addSource("gihu-cs", {
+                type: 'raster',
+                tiles: [
+                    'https://kenzkenz2.xsrv.jp/gihucs/{z}/{x}/{y}.png',
+                ],
+                attribution: '',
+                tileSize: 256
+            });
+
+            // 岐阜CS立体図レイヤ
+            map.addLayer({
+                id: 'gihu-cs-tiles',
+                type: 'raster',
+                source: 'gihu-cs',
                 minzoom: 1,
                 maxzoom: 23,
                 'layout': {
