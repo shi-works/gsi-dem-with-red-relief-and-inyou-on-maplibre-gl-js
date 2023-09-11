@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>地理院 標高タイル（DEM5A）+赤色立体地図+陰陽図</title>
+    <title>地理院 標高タイル（DEM10B）+赤色立体地図+陰陽図</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.js'></script>
@@ -74,12 +74,13 @@
         const map = new maplibregl.Map({
             container: 'map',
             style: 'std.json',
-            zoom: 13.5,
+            // style: 'https://tile2.openstreetmap.jp/styles/osm-bright-ja/style.json',
+            zoom: 14.87,
             minZoom: 1,
             maxZoom: 23,
             pitch: 60,
             bearing: 0,
-            center: [139.40672, 34.70482],
+            center: [139.20525, 35.72854],
             hash: true,
             attributionControl: false
         });
@@ -125,7 +126,7 @@
             map.addSource("gsi-dem", {
                 type: 'raster-dem',
                 tiles: [
-                    'gsidem://https://cyberjapandata.gsi.go.jp/xyz/dem5a_png/{z}/{x}/{y}.png',
+                    'gsidem://https://cyberjapandata.gsi.go.jp/xyz/dem_png/{z}/{x}/{y}.png',
                 ],
                 attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html#dem" target="_blank">地理院タイル（標高タイル）</a>',
                 tileSize: 256
@@ -133,6 +134,7 @@
 
             map.setTerrain({ 'source': 'gsi-dem', 'exaggeration': 1 });
 
+            /*
             // 陰影起伏図ソース
             map.addSource("hillshade", {
                 type: 'raster',
@@ -154,12 +156,13 @@
                     'raster-opacity': 0.5
                 }
             });
+            */
 
             // 赤色立体地図（伊豆大島）PMTilesソース
             map.addSource("pmtiles-red-relief-map-izuooshima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-izuooshima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 赤色立体地図（伊豆大島）PMTilesレイヤ
@@ -178,7 +181,7 @@
             map.addSource("pmtiles-red-relief-map-aogashima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-aogashima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 赤色立体地図（青ヶ島）PMTilesレイヤ
@@ -197,7 +200,7 @@
             map.addSource("pmtiles-red-relief-map-kozushima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-kozushima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 赤色立体地図（神津島）PMTilesレイヤ
@@ -216,7 +219,7 @@
             map.addSource("pmtiles-red-relief-map-miyakejima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-miyakejima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 赤色立体地図（三宅島）PMTilesレイヤ
@@ -235,7 +238,7 @@
             map.addSource("pmtiles-red-relief-map-hachijojima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/red-relief-image-map-025-hachijojima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 赤色立体地図（八丈島）PMTilesレイヤ
@@ -250,16 +253,15 @@
                 }
             });
 
-            /*
             // 赤色立体地図（多摩地域）ソース
             map.addSource("tama-sekisyoku", {
                 type: 'raster',
                 tiles: [
                     'https://kenzkenz2.xsrv.jp/tokyo/tamasekisyoku/{z}/{x}/{y}.png',
-                    // 'https://kenzkenz2.xsrv.jp/gihucs/{z}/{x}/{y}.png',
                 ],
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000020" target="_blank">東京都デジタルツイン 多摩地域点群データ（赤色立体地図,陰陽図）</a>',
-                tileSize: 256
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000020" target="_blank">東京都デジタルツイン 多摩地域点群データ（赤色立体地図・陰陽図）</a>',
+                tileSize: 256,
+                scheme: "tms"
             });
 
             // 赤色立体地図（多摩地域）レイヤ
@@ -273,8 +275,8 @@
                     'visibility': 'visible'
                 }
             });
-            */
 
+            /*
             // 岐阜CS立体図ソース
             map.addSource("gihu-cs", {
                 type: 'raster',
@@ -296,6 +298,7 @@
                     'visibility': 'visible'
                 }
             });
+            */
 
             // 赤色立体地図の不透明度をスライダーで制御
             const red_relief_sliderOpactiy = document.getElementById('red-relief-slider-opacity');
@@ -339,7 +342,7 @@
             map.addSource("pmtiles-inyou-map-izuooshima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-izuooshima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 陰陽図（伊豆大島）PMTilesレイヤ
@@ -361,7 +364,7 @@
             map.addSource("pmtiles-inyou-map-aogashima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-aogashima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 陰陽図（青ヶ島）PMTilesレイヤ
@@ -383,7 +386,7 @@
             map.addSource("pmtiles-inyou-map-kozushima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-kozushima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 陰陽図（神津島）PMTilesレイヤ
@@ -405,7 +408,7 @@
             map.addSource("pmtiles-inyou-map-miyakejima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-miyakejima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 陰陽図（三宅島）PMTilesレイヤ
@@ -427,7 +430,7 @@
             map.addSource("pmtiles-inyou-map-hachijojima", {
                 type: "raster",
                 url: "pmtiles://" + "https://xs489works.xsrv.jp/pmtiles-data/tokyo-digitaltwin/inyou-map-025-hachijojima.pmtiles",
-                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図,陰陽図）</a>'
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000019">東京都デジタルツイン 島しょ地域点群データ（赤色立体地図・陰陽図）</a>'
             });
 
             // 陰陽図（八丈島）PMTilesレイヤ
@@ -437,6 +440,32 @@
                 'source': 'pmtiles-inyou-map-hachijojima',
                 'minzoom': 1,
                 'maxzoom': 23,
+                'layout': {
+                    'visibility': 'visible'
+                },
+                'paint': {
+                    'raster-opacity': 0
+                }
+            });
+
+            // 陰陽図（多摩地域）ソース
+            map.addSource("tama-inyou", {
+                type: 'raster',
+                tiles: [
+                    'https://kenzkenz2.xsrv.jp/tokyo/tamainyou/{z}/{x}/{y}.png',
+                ],
+                attribution: '<a href="https://catalog.data.metro.tokyo.lg.jp/dataset/t000029d0000000020" target="_blank">東京都デジタルツイン 多摩地域点群データ（赤色立体地図・陰陽図）</a>',
+                tileSize: 256,
+                scheme: "tms"
+            });
+
+            // 陰陽図（多摩地域）レイヤ
+            map.addLayer({
+                id: 'tama-inyou-tiles',
+                type: 'raster',
+                source: 'tama-inyou',
+                minzoom: 1,
+                maxzoom: 23,
                 'layout': {
                     'visibility': 'visible'
                 },
@@ -472,6 +501,11 @@
                 );
                 map.setPaintProperty(
                     'pmtiles-inyou-map-hachijojima',
+                    'raster-opacity',
+                    parseInt(e.target.value, 10) / 100
+                );
+                map.setPaintProperty(
+                    'tama-inyou-tiles',
                     'raster-opacity',
                     parseInt(e.target.value, 10) / 100
                 );
